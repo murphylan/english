@@ -697,7 +697,7 @@ function WordFocusCard({
               Current Word
             </p>
             <h2
-              className="mt-2 whitespace-nowrap font-black leading-none tracking-tight text-emerald-950"
+              className="mt-2 whitespace-nowrap font-extrabold leading-none text-emerald-950"
               style={wordTitleStyle}
             >
               {currentWord.word}
@@ -1253,18 +1253,18 @@ function getWordTitleFontSize(word: string): string {
   const length = word.length;
 
   if (length <= 8) {
-    return "clamp(4.25rem, 7vw, 6rem)";
+    return "clamp(4rem, 6.6vw, 5.6rem)";
   }
 
   if (length <= 12) {
-    return "clamp(3.5rem, 5.6vw, 5rem)";
+    return "clamp(3.3rem, 5.2vw, 4.7rem)";
   }
 
   if (length <= 16) {
-    return "clamp(2.9rem, 4.4vw, 4rem)";
+    return "clamp(2.8rem, 4.2vw, 3.8rem)";
   }
 
-  return "clamp(2.2rem, 3.4vw, 3.25rem)";
+  return "clamp(2.1rem, 3.2vw, 3rem)";
 }
 
 function buildWordExpansion(word: WordEntry): WordExpansion {
