@@ -691,7 +691,7 @@ function WordFocusCard({
       <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-lime-200" />
       <div className="absolute -bottom-12 left-10 h-24 w-24 rounded-full bg-emerald-100" />
       <div className="relative">
-        <div className="grid gap-4 xl:grid-cols-[minmax(420px,1.2fr)_minmax(220px,0.8fr)_300px]">
+        <div className="grid gap-4 xl:grid-cols-[minmax(420px,1.15fr)_minmax(0,0.85fr)]">
           <div className="min-w-0">
             <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-700">
               Current Word
@@ -713,42 +713,69 @@ function WordFocusCard({
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-            <div className="rounded-3xl bg-emerald-50 p-4">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600">
-                中文释义
-              </p>
-              <p className="mt-2 text-2xl font-black">
-                {showAnswer ? currentWord.chineseDefinition : "先想一想"}
-              </p>
-            </div>
-            <div className="rounded-3xl bg-lime-50 p-4">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600">
-                English Meaning
-              </p>
-              <p className="mt-2 text-sm font-bold leading-6 text-emerald-900">
-                {showAnswer
-                  ? currentWord.englishDefinition
-                  : "Reveal the meaning when you are ready."}
-              </p>
+          <div className="min-w-0 rounded-[1.5rem] border-2 border-emerald-900/10 bg-[#fffdf4] p-3">
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+                <div className="min-w-0 flex-1 rounded-2xl bg-emerald-50 px-4 py-3">
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600">
+                    中文释义
+                  </p>
+                  <p className="mt-2 text-2xl font-black">
+                    {showAnswer ? currentWord.chineseDefinition : "先想一想"}
+                  </p>
+                </div>
+
+                {studyMode === "flashcard" && (
+                  <div className="shrink-0 sm:w-52">
+                    <PracticeContent
+                      choiceOptions={choiceOptions}
+                      currentWord={currentWord}
+                      currentWordMarkedWrong={currentWordMarkedWrong}
+                      handleChoiceAnswer={handleChoiceAnswer}
+                      handleMarkUnfamiliar={handleMarkUnfamiliar}
+                      handleRecordAnswer={handleRecordAnswer}
+                      handleSpellingSubmit={handleSpellingSubmit}
+                      revealed={revealed}
+                      selectedOption={selectedOption}
+                      setRevealed={setRevealed}
+                      setTypedAnswer={setTypedAnswer}
+                      studyMode={studyMode}
+                      typedAnswer={typedAnswer}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="rounded-2xl bg-lime-50 px-4 py-3">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600">
+                  English Meaning
+                </p>
+                <p className="mt-2 text-sm font-bold leading-6 text-emerald-900">
+                  {showAnswer
+                    ? currentWord.englishDefinition
+                    : "Reveal the meaning when you are ready."}
+                </p>
+              </div>
+
+              {studyMode !== "flashcard" && (
+                <PracticeContent
+                  choiceOptions={choiceOptions}
+                  currentWord={currentWord}
+                  currentWordMarkedWrong={currentWordMarkedWrong}
+                  handleChoiceAnswer={handleChoiceAnswer}
+                  handleMarkUnfamiliar={handleMarkUnfamiliar}
+                  handleRecordAnswer={handleRecordAnswer}
+                  handleSpellingSubmit={handleSpellingSubmit}
+                  revealed={revealed}
+                  selectedOption={selectedOption}
+                  setRevealed={setRevealed}
+                  setTypedAnswer={setTypedAnswer}
+                  studyMode={studyMode}
+                  typedAnswer={typedAnswer}
+                />
+              )}
             </div>
           </div>
-
-          <PracticeContent
-            choiceOptions={choiceOptions}
-            currentWord={currentWord}
-            currentWordMarkedWrong={currentWordMarkedWrong}
-            handleChoiceAnswer={handleChoiceAnswer}
-            handleMarkUnfamiliar={handleMarkUnfamiliar}
-            handleRecordAnswer={handleRecordAnswer}
-            handleSpellingSubmit={handleSpellingSubmit}
-            revealed={revealed}
-            selectedOption={selectedOption}
-            setRevealed={setRevealed}
-            setTypedAnswer={setTypedAnswer}
-            studyMode={studyMode}
-            typedAnswer={typedAnswer}
-          />
         </div>
 
         <div className="mt-4 rounded-3xl border-2 border-dashed border-emerald-200 bg-[#fffdf4] p-4">
@@ -883,46 +910,37 @@ function PracticeContent({
   typedAnswer: string;
 }) {
   return (
-    <div className="rounded-[1.5rem] border-2 border-emerald-900/10 bg-[#fff9e8] p-4">
-      <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
-        Practice
-      </p>
-
-      {studyMode === "flashcard" && (
-        <div className="mt-3 space-y-3">
-          {!revealed ? (
+    <div className="h-full rounded-2xl bg-white/80 p-3 shadow-[0_3px_0_rgba(20,83,45,0.08)]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+        {studyMode === "flashcard" &&
+          (!revealed ? (
             <button
               type="button"
               onClick={() => setRevealed(true)}
-              className="w-full rounded-3xl bg-emerald-600 px-5 py-4 font-black text-white shadow-[0_6px_0_rgba(20,83,45,0.35)] transition hover:-translate-y-0.5 hover:bg-emerald-500"
+              className="w-full rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-black text-white shadow-[0_5px_0_rgba(20,83,45,0.35)] transition hover:-translate-y-0.5 hover:bg-emerald-500"
             >
               显示释义
             </button>
           ) : (
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
+            <div className="grid w-full grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={handleMarkUnfamiliar}
                 disabled={currentWordMarkedWrong}
-                className="rounded-3xl border-2 border-rose-200 bg-rose-50 px-5 py-4 font-black text-rose-700 transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-2xl border-2 border-rose-200 bg-rose-50 px-4 py-3 text-sm font-black text-rose-700 transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {currentWordMarkedWrong ? "已标记" : "还不熟"}
               </button>
               <button
                 type="button"
                 onClick={() => handleRecordAnswer(true)}
-                className="rounded-3xl bg-emerald-600 px-5 py-4 font-black text-white shadow-[0_6px_0_rgba(20,83,45,0.35)] transition hover:-translate-y-0.5 hover:bg-emerald-500"
+                className="rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-black text-white shadow-[0_5px_0_rgba(20,83,45,0.35)] transition hover:-translate-y-0.5 hover:bg-emerald-500"
               >
                 记住了
               </button>
             </div>
-          )}
-
-          <p className="rounded-2xl bg-lime-50 px-4 py-3 text-sm font-bold leading-6 text-emerald-800">
-            把 {currentWord.word} 和“{currentWord.chineseDefinition}”连在一个真实技术场景里复述一遍。
-          </p>
-        </div>
-      )}
+          ))}
+      </div>
 
       <div className={studyMode === "flashcard" ? "mt-0" : "mt-4"}>
         {(studyMode === "choice-en-zh" ||
