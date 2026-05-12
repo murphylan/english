@@ -26,6 +26,13 @@ interface AttemptResult {
   correct: boolean;
 }
 
+interface WordExpansion {
+  synonyms: string[];
+  antonyms: string[];
+  forms: string[];
+  collocations: string[];
+}
+
 const STATUS_LABELS = {
   new: "未学",
   learning: "学习中",
@@ -638,6 +645,10 @@ function WordFocusCard({
   studyMode: StudyMode;
   typedAnswer: string;
 }) {
+  const wordExpansion = React.useMemo(
+    () => buildWordExpansion(currentWord),
+    [currentWord]
+  );
   const showAnswer =
     revealed ||
     studyMode === "choice-en-zh" ||
@@ -702,21 +713,53 @@ function WordFocusCard({
 
         <div className="mt-4 rounded-3xl border-2 border-dashed border-emerald-200 bg-[#fffdf4] p-4">
           <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">
-            Example Sentences
+            Example & Word Power
           </p>
-          <div className="mt-3 grid gap-3 lg:grid-cols-2">
-            {exampleSentences.map((sentence) => (
-              <p
-                key={sentence}
-                className="rounded-2xl bg-white px-4 py-3 text-sm font-bold leading-6 text-emerald-900"
-              >
-                {sentence}
+          <div className="mt-3 grid gap-3 xl:grid-cols-[0.9fr_1.1fr]">
+            <div className="rounded-2xl bg-white px-4 py-3">
+              <p className="text-[11px] font-black uppercase tracking-[0.18em] text-emerald-600">
+                Example
               </p>
-            ))}
+              <p className="mt-2 text-sm font-bold leading-6 text-emerald-900">
+                {exampleSentences[0]}
+              </p>
+            </div>
+            <WordExpansionCard expansion={wordExpansion} />
           </div>
         </div>
       </div>
     </article>
+  );
+}
+
+function WordExpansionCard({ expansion }: { expansion: WordExpansion }) {
+  return (
+    <div className="grid gap-2 rounded-2xl bg-white p-3 sm:grid-cols-2">
+      <ExpansionGroup label="近义表达" values={expansion.synonyms} />
+      <ExpansionGroup label="反义 / 对比" values={expansion.antonyms} />
+      <ExpansionGroup label="词形变化" values={expansion.forms} />
+      <ExpansionGroup label="固定搭配" values={expansion.collocations} />
+    </div>
+  );
+}
+
+function ExpansionGroup({ label, values }: { label: string; values: string[] }) {
+  return (
+    <div className="rounded-2xl bg-emerald-50 px-3 py-2">
+      <p className="text-[11px] font-black uppercase tracking-[0.16em] text-emerald-600">
+        {label}
+      </p>
+      <div className="mt-2 flex flex-wrap gap-1.5">
+        {values.map((value) => (
+          <span
+            key={value}
+            className="rounded-full bg-white px-2.5 py-1 text-xs font-bold text-emerald-900"
+          >
+            {value}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -1113,7 +1156,99 @@ function buildExampleSentences(word: WordEntry): string[] {
 
   return [
     `In a code review, the team discussed how ${article} ${word.word} relates to ${word.englishDefinition.toLowerCase()}.`,
-    `Try to explain "${word.word}" in one sentence before you look at the Chinese meaning: ${word.chineseDefinition}.`,
   ];
 }
+
+function buildWordExpansion(word: WordEntry): WordExpansion {
+  const curated = WORD_EXPANSIONS[word.word.toLowerCase()];
+  const baseForms = buildWordForms(word.word);
+
+  return {
+    synonyms: curated?.synonyms ?? buildRelatedWords(word, "synonyms"),
+    antonyms: curated?.antonyms ?? buildRelatedWords(word, "antonyms"),
+    forms: curated?.forms ?? baseForms,
+    collocations:
+      curated?.collocations ??
+      [`${word.word} value`, `${word.word} name`, `define ${word.word}`],
+  };
+}
+
+function buildRelatedWords(
+  word: WordEntry,
+  kind: "synonyms" | "antonyms"
+): string[] {
+  if (kind === "synonyms") {
+    return [
+      word.englishDefinition.split(" ").slice(0, 2).join(" "),
+      `${word.word} concept`,
+    ];
+  }
+
+  return [`non-${word.word}`, `mutable ${word.word}`];
+}
+
+function buildWordForms(word: string): string[] {
+  const lower = word.toLowerCase();
+
+  if (lower.endsWith("e")) {
+    return [word, `${word}d`, `${word.slice(0, -1)}ing`];
+  }
+
+  if (lower.endsWith("y")) {
+    return [word, `${word.slice(0, -1)}ies`, `${word.slice(0, -1)}ied`];
+  }
+
+  return [word, `${word}s`, `${word}ed`];
+}
+
+const WORD_EXPANSIONS: Record<string, WordExpansion> = {
+  variable: {
+    synonyms: ["identifier", "symbol", "named value"],
+    antonyms: ["constant", "literal", "fixed value"],
+    forms: ["variable", "variables", "vary", "variant"],
+    collocations: ["declare a variable", "assign a variable", "local variable"],
+  },
+  constant: {
+    synonyms: ["fixed value", "immutable value", "literal"],
+    antonyms: ["variable", "mutable value", "dynamic value"],
+    forms: ["constant", "constants", "const", "constant value"],
+    collocations: ["define a constant", "constant value", "compile-time constant"],
+  },
+  function: {
+    synonyms: ["method", "routine", "procedure"],
+    antonyms: ["caller", "inline code", "script body"],
+    forms: ["function", "functions", "functional", "function call"],
+    collocations: ["call a function", "define a function", "pure function"],
+  },
+  parameter: {
+    synonyms: ["input", "argument slot", "formal argument"],
+    antonyms: ["return value", "argument", "output"],
+    forms: ["parameter", "parameters", "parameterize", "parameterized"],
+    collocations: ["function parameter", "optional parameter", "parameter list"],
+  },
+  argument: {
+    synonyms: ["actual value", "input value", "passed value"],
+    antonyms: ["parameter", "return value", "default value"],
+    forms: ["argument", "arguments", "arg", "argument list"],
+    collocations: ["pass an argument", "argument list", "command-line argument"],
+  },
+  return: {
+    synonyms: ["send back", "output", "yield"],
+    antonyms: ["receive", "input", "throw"],
+    forms: ["return", "returns", "returned", "returning"],
+    collocations: ["return a value", "return type", "early return"],
+  },
+  loop: {
+    synonyms: ["iteration", "cycle", "repetition"],
+    antonyms: ["single pass", "break", "exit"],
+    forms: ["loop", "loops", "looped", "looping"],
+    collocations: ["for loop", "while loop", "infinite loop"],
+  },
+  condition: {
+    synonyms: ["predicate", "test", "boolean expression"],
+    antonyms: ["unconditional", "always true", "always false"],
+    forms: ["condition", "conditions", "conditional", "conditioned"],
+    collocations: ["if condition", "condition check", "race condition"],
+  },
+};
 
