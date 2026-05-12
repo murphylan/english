@@ -367,6 +367,21 @@ export function VocabularyApp() {
               topicSummaries={topicSummaries}
             />
           </div>
+
+          <footer className="relative rounded-[1.75rem] border-4 border-emerald-900/10 bg-[#fff9e8]/80 px-5 py-4 text-center shadow-[0_8px_0_rgba(20,83,45,0.08)]">
+            <p className="text-sm font-bold text-emerald-800">
+              Built on{" "}
+              <a
+                href="https://murphylan.cloud"
+                target="_blank"
+                rel="noreferrer"
+                className="font-black text-emerald-950 underline decoration-emerald-300 underline-offset-4 transition hover:text-emerald-600"
+              >
+                Murphy Cloud
+              </a>
+              ：一站式云端 SaaS 产品供应商
+            </p>
+          </footer>
         </section>
       </section>
     </main>
@@ -649,6 +664,10 @@ function WordFocusCard({
     () => buildWordExpansion(currentWord),
     [currentWord]
   );
+  const wordTitleStyle = React.useMemo(
+    () => ({ fontSize: getWordTitleFontSize(currentWord.word) }),
+    [currentWord.word]
+  );
   const handleSpeak = React.useCallback((text: string) => {
     if (!("speechSynthesis" in window)) {
       toast.error("当前浏览器不支持语音播放");
@@ -672,12 +691,15 @@ function WordFocusCard({
       <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-lime-200" />
       <div className="absolute -bottom-12 left-10 h-24 w-24 rounded-full bg-emerald-100" />
       <div className="relative">
-        <div className="grid gap-4 xl:grid-cols-[minmax(280px,0.82fr)_minmax(280px,1fr)_360px]">
+        <div className="grid gap-4 xl:grid-cols-[minmax(420px,1.2fr)_minmax(220px,0.8fr)_300px]">
           <div className="min-w-0">
             <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-700">
               Current Word
             </p>
-            <h2 className="mt-2 truncate whitespace-nowrap text-[clamp(3.25rem,6vw,5rem)] font-black tracking-tight text-emerald-950">
+            <h2
+              className="mt-2 whitespace-nowrap font-black leading-none tracking-tight text-emerald-950"
+              style={wordTitleStyle}
+            >
               {currentWord.word}
             </h2>
             <div className="mt-2 flex items-center gap-3">
@@ -1225,6 +1247,24 @@ function buildExampleSentences(word: WordEntry): string[] {
   return [
     `In a code review, the team discussed how ${article} ${word.word} relates to ${word.englishDefinition.toLowerCase()}.`,
   ];
+}
+
+function getWordTitleFontSize(word: string): string {
+  const length = word.length;
+
+  if (length <= 8) {
+    return "clamp(4.25rem, 7vw, 6rem)";
+  }
+
+  if (length <= 12) {
+    return "clamp(3.5rem, 5.6vw, 5rem)";
+  }
+
+  if (length <= 16) {
+    return "clamp(2.9rem, 4.4vw, 4rem)";
+  }
+
+  return "clamp(2.2rem, 3.4vw, 3.25rem)";
 }
 
 function buildWordExpansion(word: WordEntry): WordExpansion {
