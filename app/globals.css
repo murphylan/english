@@ -3,14 +3,14 @@
 :root {
   --background: #f3f4f6;
   --foreground: #171717;
-  --font-inter: "Inter", Arial, Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", sans-serif;
-  --font-jakarta: "Plus Jakarta Sans", "Inter", Arial, Helvetica,
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --font-fira-code: "Fira Code", "SFMono-Regular", Consolas,
-    "Liberation Mono", Menlo, monospace;
-  --font-geist-sans: var(--font-inter);
-  --font-geist-mono: var(--font-fira-code);
+  --font-inter: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    sans-serif;
+  --font-jakarta: "Avenir Next", "SF Pro Display", -apple-system,
+    BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    sans-serif;
+  --font-fira-code: "SFMono-Regular", Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
 }
 
 @theme inline {

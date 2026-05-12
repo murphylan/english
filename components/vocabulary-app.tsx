@@ -649,6 +649,18 @@ function WordFocusCard({
     () => buildWordExpansion(currentWord),
     [currentWord]
   );
+  const handleSpeak = React.useCallback((text: string) => {
+    if (!("speechSynthesis" in window)) {
+      toast.error("当前浏览器不支持语音播放");
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = text.trim().includes(" ") ? 0.88 : 0.78;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }, []);
   const showAnswer =
     revealed ||
     studyMode === "choice-en-zh" ||
@@ -660,17 +672,23 @@ function WordFocusCard({
       <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-lime-200" />
       <div className="absolute -bottom-12 left-10 h-24 w-24 rounded-full bg-emerald-100" />
       <div className="relative">
-        <div className="grid gap-4 xl:grid-cols-[minmax(220px,0.7fr)_minmax(280px,1fr)_360px]">
-          <div>
+        <div className="grid gap-4 xl:grid-cols-[minmax(280px,0.82fr)_minmax(280px,1fr)_360px]">
+          <div className="min-w-0">
             <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-700">
               Current Word
             </p>
-            <h2 className="mt-2 break-words text-5xl font-black tracking-tight text-emerald-950 sm:text-7xl">
+            <h2 className="mt-2 truncate whitespace-nowrap text-[clamp(3.25rem,6vw,5rem)] font-black tracking-tight text-emerald-950">
               {currentWord.word}
             </h2>
-            <p className="mt-2 text-lg font-bold text-emerald-700">
-              {currentWord.phonetic}
-            </p>
+            <div className="mt-2 flex items-center gap-3">
+              <p className="text-lg font-bold text-emerald-700">
+                {currentWord.phonetic}
+              </p>
+              <SpeakButton
+                label={`朗读单词 ${currentWord.word}`}
+                onClick={() => handleSpeak(currentWord.word)}
+              />
+            </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
@@ -717,9 +735,15 @@ function WordFocusCard({
           </p>
           <div className="mt-3 grid gap-3 xl:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-2xl bg-white px-4 py-3">
-              <p className="text-[11px] font-black uppercase tracking-[0.18em] text-emerald-600">
-                Example
-              </p>
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[11px] font-black uppercase tracking-[0.18em] text-emerald-600">
+                  Example
+                </p>
+                <SpeakButton
+                  label="朗读例句"
+                  onClick={() => handleSpeak(exampleSentences[0])}
+                />
+              </div>
               <p className="mt-2 text-sm font-bold leading-6 text-emerald-900">
                 {exampleSentences[0]}
               </p>
@@ -760,6 +784,50 @@ function ExpansionGroup({ label, values }: { label: string; values: string[] }) 
         ))}
       </div>
     </div>
+  );
+}
+
+function SpeakButton({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      onClick={onClick}
+      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-emerald-900/10 bg-emerald-50 text-emerald-700 transition hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-emerald-100"
+    >
+      <SpeakerIcon />
+    </button>
+  );
+}
+
+function SpeakerIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-4 w-4"
+      fill="none"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M2.5 6.2v3.6h2.4l3.4 2.7v-9L4.9 6.2H2.5Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M10.4 5.4c.7.7 1.1 1.6 1.1 2.6s-.4 1.9-1.1 2.6M12.4 3.7A6 6 0 0 1 14 8a6 6 0 0 1-1.6 4.3"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="1.7"
+      />
+    </svg>
   );
 }
 
