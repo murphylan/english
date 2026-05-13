@@ -354,18 +354,18 @@ export function VocabularyApp() {
             />
           </div>
 
-          <footer className="relative rounded-[1.25rem] border-2 border-emerald-900/10 bg-[#fff9e8]/70 px-3 py-2 text-center shadow-[0_4px_0_rgba(20,83,45,0.08)] sm:rounded-[1.75rem] sm:border-4 sm:px-5 sm:py-4 sm:shadow-[0_8px_0_rgba(20,83,45,0.08)]">
-            <p className="text-xs font-bold text-emerald-800 sm:text-sm">
-              Built on{" "}
+          <footer className="relative py-1 text-center sm:py-2">
+            <p className="text-[11px] font-bold text-emerald-700/60 sm:text-xs sm:text-emerald-700/65">
+              Spring Academy ·{" "}
               <a
                 href="https://murphylan.cloud"
                 target="_blank"
                 rel="noreferrer"
-                className="font-black text-emerald-950 underline decoration-emerald-300 underline-offset-4 transition hover:text-emerald-600"
+                className="font-black text-emerald-800/75 underline decoration-emerald-300/60 underline-offset-4 transition hover:text-emerald-700"
               >
                 Murphy Cloud
               </a>
-              ：一站式云端 SaaS 产品供应商
+              提供支持
             </p>
           </footer>
         </section>
