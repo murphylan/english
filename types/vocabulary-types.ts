@@ -23,6 +23,7 @@ export const wordEntrySchema = z.object({
   phonetic: z.string(),
   englishDefinition: z.string(),
   chineseDefinition: z.string(),
+  exampleSentences: z.array(z.string()).optional(),
 });
 
 export const topicSchema = z.object({
@@ -42,6 +43,7 @@ export interface WordEntry {
   phonetic: string;
   englishDefinition: string;
   chineseDefinition: string;
+  exampleSentences?: string[];
 }
 
 export interface Topic {
