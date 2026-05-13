@@ -50,22 +50,22 @@ export function getMaxWordTitleFontSize(word: string): number {
   const length = word.length;
 
   if (length <= 6) {
-    return 5.6;
+    return 5.05;
   }
 
   if (length <= 8) {
-    return 5.1;
+    return 4.65;
   }
 
   if (length <= 12) {
-    return 4.2;
+    return 3.9;
   }
 
   if (length <= 16) {
-    return 3.4;
+    return 3.2;
   }
 
-  return 2.7;
+  return 2.55;
 }
 
 export function buildWordExpansion(word: WordEntry): WordExpansion {

@@ -280,26 +280,26 @@ export function VocabularyApp() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#ddf7cf] text-emerald-950">
       <Toaster richColors />
-      <section className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
+      <section className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-2.5 px-2.5 py-2.5 sm:gap-4 sm:px-6 sm:py-4 lg:px-8">
         <div className="pointer-events-none absolute left-8 top-10 h-28 w-28 rounded-full bg-white/45 blur-2xl" />
         <div className="pointer-events-none absolute right-8 top-20 h-40 w-40 rounded-full bg-lime-200/60 blur-3xl" />
         <div className="pointer-events-none absolute bottom-10 left-1/3 h-32 w-32 rounded-full bg-emerald-200/60 blur-3xl" />
 
-        <header className="relative rounded-[1.75rem] border-4 border-emerald-900/10 bg-[#fff9e8] px-4 py-3 shadow-[0_10px_0_rgba(20,83,45,0.1)] sm:px-6">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <header className="relative rounded-[1.35rem] border-2 border-emerald-900/10 bg-[#fff9e8] px-3 py-2 shadow-[0_6px_0_rgba(20,83,45,0.1)] sm:rounded-[1.75rem] sm:border-[3px] sm:px-6 sm:py-3 sm:shadow-[0_7px_0_rgba(20,83,45,0.1)]">
+          <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
-              <p className="text-xs font-black uppercase tracking-[0.35em] text-emerald-700">
+              <p className="text-[10px] font-black uppercase leading-none tracking-[0.35em] text-emerald-700 sm:text-xs">
                 Spring Academy
               </p>
-              <h1 className="mt-1 text-2xl font-black tracking-tight text-emerald-950 sm:text-4xl">
+              <h1 className="mt-0.5 text-lg font-black leading-tight tracking-tight text-emerald-950 sm:mt-1 sm:text-4xl">
                 技术英语记忆训练器
               </h1>
-              <p className="mt-1 truncate text-sm font-bold text-emerald-800">
+              <p className="mt-0.5 truncate text-[11px] font-bold text-emerald-800 sm:mt-1 sm:text-sm">
                 当前目标：看清一个单词、理解一个场景、完成一次反馈。
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center sm:min-w-72">
+            <div className="grid grid-cols-3 gap-1.5 text-center sm:min-w-72 sm:gap-2">
               <MetricCard label="已掌握" value={masteredCount} />
               <MetricCard label="待复习" value={dueCount} />
               <MetricCard label="已答题" value={totalAnswered} />
@@ -307,7 +307,7 @@ export function VocabularyApp() {
           </div>
         </header>
 
-        <section className="relative flex flex-1 flex-col gap-4">
+        <section className="relative flex flex-1 flex-col gap-2.5 sm:gap-4">
           <StudyPanel
             activeTopic={activeTopic}
             attempts={attempts}
@@ -354,8 +354,8 @@ export function VocabularyApp() {
             />
           </div>
 
-          <footer className="relative rounded-[1.75rem] border-4 border-emerald-900/10 bg-[#fff9e8]/80 px-5 py-4 text-center shadow-[0_8px_0_rgba(20,83,45,0.08)]">
-            <p className="text-sm font-bold text-emerald-800">
+          <footer className="relative rounded-[1.25rem] border-2 border-emerald-900/10 bg-[#fff9e8]/70 px-3 py-2 text-center shadow-[0_4px_0_rgba(20,83,45,0.08)] sm:rounded-[1.75rem] sm:border-4 sm:px-5 sm:py-4 sm:shadow-[0_8px_0_rgba(20,83,45,0.08)]">
+            <p className="text-xs font-bold text-emerald-800 sm:text-sm">
               Built on{" "}
               <a
                 href="https://murphylan.cloud"
