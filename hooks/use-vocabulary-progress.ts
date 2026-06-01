@@ -7,6 +7,11 @@ import {
   getProgress,
   updateProgressAfterAnswer,
 } from "@/lib/learning/progress";
+import {
+  getPersistentItem,
+  removePersistentItem,
+  setPersistentItem,
+} from "@/lib/client/persistent-storage";
 
 const PROGRESS_STORAGE_KEY = "technical-english-progress-v1";
 
@@ -21,21 +26,18 @@ export function useVocabularyProgress() {
   React.useEffect(() => {
     let cancelled = false;
 
-    queueMicrotask(() => {
+    void getPersistentItem<Record<string, WordProgress>>(
+      PROGRESS_STORAGE_KEY,
+    ).then((saved) => {
       if (cancelled) {
         return;
       }
 
-      try {
-        const saved = localStorage.getItem(PROGRESS_STORAGE_KEY);
-        if (saved) {
-          setProgressByWordId(JSON.parse(saved) as Record<string, WordProgress>);
-        }
-      } catch (error) {
-        console.error("Failed to restore vocabulary progress:", error);
-      } finally {
-        setInitialized(true);
+      if (saved) {
+        setProgressByWordId(saved);
       }
+
+      setInitialized(true);
     });
 
     return () => {
@@ -48,14 +50,7 @@ export function useVocabularyProgress() {
       return;
     }
 
-    try {
-      localStorage.setItem(
-        PROGRESS_STORAGE_KEY,
-        JSON.stringify(progressByWordId)
-      );
-    } catch (error) {
-      console.error("Failed to save vocabulary progress:", error);
-    }
+    setPersistentItem(PROGRESS_STORAGE_KEY, progressByWordId);
   }, [initialized, progressByWordId]);
 
   // 3. Callbacks
@@ -63,23 +58,22 @@ export function useVocabularyProgress() {
     (wordId: string, mode: StudyMode, correct: boolean) => {
       setProgressByWordId((current) => {
         const progress = getProgress(current, wordId);
-
-        return {
+        const nextProgressByWordId = {
           ...current,
           [wordId]: updateProgressAfterAnswer(progress, correct, mode),
         };
+
+        setPersistentItem(PROGRESS_STORAGE_KEY, nextProgressByWordId);
+
+        return nextProgressByWordId;
       });
     },
-    []
+    [],
   );
 
   const resetProgress = React.useCallback(() => {
     setProgressByWordId({});
-    try {
-      localStorage.removeItem(PROGRESS_STORAGE_KEY);
-    } catch (error) {
-      console.error("Failed to reset vocabulary progress:", error);
-    }
+    removePersistentItem(PROGRESS_STORAGE_KEY);
   }, []);
 
   return {
@@ -89,4 +83,3 @@ export function useVocabularyProgress() {
     resetProgress,
   };
 }
-

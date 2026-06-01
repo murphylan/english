@@ -14,6 +14,11 @@ import type { StudyMode, WordEntry } from "@/types/vocabulary-types";
 import type { AttemptResult } from "@/components/vocabulary/types";
 
 import {
+  getPersistentItem,
+  removePersistentItem,
+  setPersistentItem,
+} from "@/lib/client/persistent-storage";
+import {
   getProgress,
   getTopicSummaries,
   normalizeAnswer,
@@ -27,6 +32,41 @@ import {
   buildChoiceOptions,
   buildExampleSentences,
 } from "@/lib/learning/vocabulary-content";
+
+const SESSION_STORAGE_KEY = "technical-english-session-v1";
+const STUDY_MODE_IDS = [
+  "flashcard",
+  "choice-en-zh",
+  "choice-zh-en",
+  "spelling",
+  "scenario",
+] as const;
+
+interface SavedVocabularySession {
+  version: 1;
+  selectedTopicId: string;
+  studyMode: StudyMode;
+  batchSize: number;
+  wordIds: string[];
+  currentIndex: number;
+  revealed: boolean;
+  selectedOption: string;
+  typedAnswer: string;
+  attempts: AttemptResult[];
+  updatedAt: string;
+}
+
+function isStudyMode(value: string): value is StudyMode {
+  return STUDY_MODE_IDS.includes(value as StudyMode);
+}
+
+function restoreSessionWords(wordIds: string[]): WordEntry[] {
+  const wordsById = new Map(WORD_ENTRIES.map((word) => [word.id, word]));
+
+  return wordIds
+    .map((wordId) => wordsById.get(wordId))
+    .filter((word): word is WordEntry => Boolean(word));
+}
 
 export function VocabularyApp() {
   // 1. Hooks
@@ -43,6 +83,7 @@ export function VocabularyApp() {
   const [selectedOption, setSelectedOption] = React.useState("");
   const [typedAnswer, setTypedAnswer] = React.useState("");
   const [attempts, setAttempts] = React.useState<AttemptResult[]>([]);
+  const [sessionRestored, setSessionRestored] = React.useState(false);
   const autoStartedRef = React.useRef(false);
 
   // 3. Memoized values
@@ -56,7 +97,7 @@ export function VocabularyApp() {
 
   const topicSummaries = React.useMemo(
     () => getTopicSummaries(TOPICS, WORD_ENTRIES, progressByWordId),
-    [progressByWordId]
+    [progressByWordId],
   );
 
   const currentWord = sessionWords[currentIndex];
@@ -70,7 +111,7 @@ export function VocabularyApp() {
 
   const activeTopic = React.useMemo(
     () => TOPICS.find((topic) => topic.id === currentWord?.topicId),
-    [currentWord]
+    [currentWord],
   );
 
   const nextWord = sessionWords[currentIndex + 1];
@@ -95,17 +136,17 @@ export function VocabularyApp() {
     () =>
       Object.values(progressByWordId).reduce(
         (sum, progress) => sum + progress.correctCount + progress.wrongCount,
-        0
+        0,
       ),
-    [progressByWordId]
+    [progressByWordId],
   );
 
   const masteredCount = React.useMemo(
     () =>
       Object.values(progressByWordId).filter(
-        (progress) => progress.status === "mastered"
+        (progress) => progress.status === "mastered",
       ).length,
-    [progressByWordId]
+    [progressByWordId],
   );
 
   const dueCount = React.useMemo(
@@ -115,13 +156,13 @@ export function VocabularyApp() {
 
         return progress.status === "learning" && progress.intervalDays === 0;
       }).length,
-    [progressByWordId]
+    [progressByWordId],
   );
 
   const correctAttempts = attempts.filter((attempt) => attempt.correct).length;
   const currentWordMarkedWrong = currentWord
     ? attempts.some(
-        (attempt) => attempt.wordId === currentWord.id && !attempt.correct
+        (attempt) => attempt.wordId === currentWord.id && !attempt.correct,
       )
     : false;
   const sessionFinished =
@@ -135,30 +176,30 @@ export function VocabularyApp() {
   // 4. Callbacks
   const handleStartSession = React.useCallback(
     (announce = true) => {
-    const selectedWords = selectSessionWords(
-      filteredWords,
-      progressByWordId,
-      batchSize
-    );
+      const selectedWords = selectSessionWords(
+        filteredWords,
+        progressByWordId,
+        batchSize,
+      );
 
-    setSessionWords(selectedWords);
-    setCurrentIndex(0);
-    setRevealed(false);
-    setSelectedOption("");
-    setTypedAnswer("");
-    setAttempts([]);
+      setSessionWords(selectedWords);
+      setCurrentIndex(0);
+      setRevealed(false);
+      setSelectedOption("");
+      setTypedAnswer("");
+      setAttempts([]);
 
-    if (!announce) {
-      return;
-    }
+      if (!announce) {
+        return;
+      }
 
-    if (selectedWords.length === 0) {
-      toast.error("当前筛选条件下没有可学习的单词");
-    } else {
-      toast.success(`已生成 ${selectedWords.length} 个词的学习任务`);
-    }
+      if (selectedWords.length === 0) {
+        toast.error("当前筛选条件下没有可学习的单词");
+      } else {
+        toast.success(`已生成 ${selectedWords.length} 个词的学习任务`);
+      }
     },
-    [batchSize, filteredWords, progressByWordId]
+    [batchSize, filteredWords, progressByWordId],
   );
 
   const handleRecordAnswer = React.useCallback(
@@ -177,7 +218,7 @@ export function VocabularyApp() {
       setSelectedOption("");
       setTypedAnswer("");
     },
-    [currentWord, recordAnswer, studyMode]
+    [currentWord, recordAnswer, studyMode],
   );
 
   const handleMarkUnfamiliar = React.useCallback(() => {
@@ -214,7 +255,7 @@ export function VocabularyApp() {
       setSelectedOption("");
       setTypedAnswer("");
     },
-    [sessionWords.length]
+    [sessionWords.length],
   );
 
   const handleChoiceAnswer = React.useCallback(
@@ -231,11 +272,11 @@ export function VocabularyApp() {
 
       setSelectedOption(option);
       toast[correct ? "success" : "error"](
-        correct ? "答对了" : `正确答案：${correctAnswer}`
+        correct ? "答对了" : `正确答案：${correctAnswer}`,
       );
       window.setTimeout(() => handleRecordAnswer(correct), 350);
     },
-    [currentWord, handleRecordAnswer, studyMode]
+    [currentWord, handleRecordAnswer, studyMode],
   );
 
   const handleSpellingSubmit = React.useCallback(
@@ -250,11 +291,11 @@ export function VocabularyApp() {
         normalizeAnswer(typedAnswer) === normalizeAnswer(currentWord.word);
 
       toast[correct ? "success" : "error"](
-        correct ? "拼写正确" : `正确拼写：${currentWord.word}`
+        correct ? "拼写正确" : `正确拼写：${currentWord.word}`,
       );
       handleRecordAnswer(correct);
     },
-    [currentWord, handleRecordAnswer, typedAnswer]
+    [currentWord, handleRecordAnswer, typedAnswer],
   );
 
   const handleResetProgress = React.useCallback(() => {
@@ -262,19 +303,104 @@ export function VocabularyApp() {
     setSessionWords([]);
     setCurrentIndex(0);
     setAttempts([]);
+    removePersistentItem(SESSION_STORAGE_KEY);
     autoStartedRef.current = false;
     toast.success("学习进度已重置");
   }, [resetProgress]);
 
   // 5. Effects
   React.useEffect(() => {
-    if (!initialized || autoStartedRef.current) {
+    let cancelled = false;
+
+    void getPersistentItem<SavedVocabularySession>(SESSION_STORAGE_KEY).then(
+      (saved) => {
+        if (cancelled) {
+          return;
+        }
+
+        if (saved && saved.version === 1 && isStudyMode(saved.studyMode)) {
+          const restoredWords = restoreSessionWords(
+            Array.isArray(saved.wordIds) ? saved.wordIds : [],
+          );
+          const batchSizeToRestore =
+            Number.isFinite(saved.batchSize) && saved.batchSize > 0
+              ? saved.batchSize
+              : 10;
+          const currentIndexToRestore = Number.isFinite(saved.currentIndex)
+            ? saved.currentIndex
+            : 0;
+
+          setSelectedTopicId(saved.selectedTopicId || "all");
+          setStudyMode(saved.studyMode);
+          setBatchSize(batchSizeToRestore);
+          setSessionWords(restoredWords);
+          setCurrentIndex(
+            Math.min(Math.max(0, currentIndexToRestore), restoredWords.length),
+          );
+          setRevealed(Boolean(saved.revealed));
+          setSelectedOption(saved.selectedOption || "");
+          setTypedAnswer(saved.typedAnswer || "");
+          setAttempts(Array.isArray(saved.attempts) ? saved.attempts : []);
+        }
+
+        setSessionRestored(true);
+      },
+    );
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!initialized || !sessionRestored) {
+      return;
+    }
+
+    if (sessionWords.length === 0) {
+      removePersistentItem(SESSION_STORAGE_KEY);
+      return;
+    }
+
+    setPersistentItem<SavedVocabularySession>(SESSION_STORAGE_KEY, {
+      version: 1,
+      selectedTopicId,
+      studyMode,
+      batchSize,
+      wordIds: sessionWords.map((word) => word.id),
+      currentIndex,
+      revealed,
+      selectedOption,
+      typedAnswer,
+      attempts,
+      updatedAt: new Date().toISOString(),
+    });
+  }, [
+    attempts,
+    batchSize,
+    currentIndex,
+    initialized,
+    revealed,
+    selectedOption,
+    selectedTopicId,
+    sessionRestored,
+    sessionWords,
+    studyMode,
+    typedAnswer,
+  ]);
+
+  React.useEffect(() => {
+    if (!initialized || !sessionRestored || autoStartedRef.current) {
       return;
     }
 
     autoStartedRef.current = true;
+    if (sessionWords.length > 0) {
+      return;
+    }
+
     handleStartSession(false);
-  }, [handleStartSession, initialized]);
+  }, [handleStartSession, initialized, sessionRestored, sessionWords.length]);
 
   // 6. Render
   return (
@@ -292,7 +418,7 @@ export function VocabularyApp() {
                 Spring Academy
               </p>
               <h1 className="mt-0.5 text-lg font-black leading-tight tracking-tight text-emerald-950 sm:mt-1 sm:text-4xl">
-                技术英语记忆训练器
+                IT英语记忆训练器
               </h1>
               <p className="mt-0.5 truncate text-[11px] font-bold text-emerald-800 sm:mt-1 sm:text-sm">
                 当前目标：看清一个单词、理解一个场景、完成一次反馈。
