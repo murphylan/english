@@ -25,7 +25,8 @@ import {
   selectSessionWords,
 } from "@/lib/learning/progress";
 import { TOPICS, WORD_ENTRIES } from "@/lib/mock-data/vocabulary";
-import { HiddenLearningTools } from "@/components/vocabulary/learning-tools";
+import { ClearanceMap } from "@/components/vocabulary/clearance-map";
+import { LearningSettings } from "@/components/vocabulary/learning-tools";
 import { MetricCard } from "@/components/vocabulary/metric-card";
 import { StudyPanel } from "@/components/vocabulary/study-panel";
 import {
@@ -132,14 +133,17 @@ export function VocabularyApp() {
     return buildChoiceOptions(currentWord, filteredWords, studyMode);
   }, [currentWord, filteredWords, studyMode]);
 
-  const totalAnswered = React.useMemo(
-    () =>
-      Object.values(progressByWordId).reduce(
-        (sum, progress) => sum + progress.correctCount + progress.wrongCount,
-        0,
-      ),
-    [progressByWordId],
-  );
+  const accuracy = React.useMemo(() => {
+    let correct = 0;
+    let answered = 0;
+
+    for (const progress of Object.values(progressByWordId)) {
+      correct += progress.correctCount;
+      answered += progress.correctCount + progress.wrongCount;
+    }
+
+    return answered === 0 ? 0 : Math.round((correct / answered) * 100);
+  }, [progressByWordId]);
 
   const masteredCount = React.useMemo(
     () =>
@@ -149,15 +153,30 @@ export function VocabularyApp() {
     [progressByWordId],
   );
 
-  const dueCount = React.useMemo(
-    () =>
-      WORD_ENTRIES.filter((word) => {
-        const progress = getProgress(progressByWordId, word.id);
+  const statusCounts = React.useMemo(() => {
+    const counts = { new: 0, learning: 0, reviewing: 0, mastered: 0 };
 
-        return progress.status === "learning" && progress.intervalDays === 0;
-      }).length,
-    [progressByWordId],
-  );
+    for (const word of WORD_ENTRIES) {
+      counts[getProgress(progressByWordId, word.id).status] += 1;
+    }
+
+    return counts;
+  }, [progressByWordId]);
+
+  const dueCount = React.useMemo(() => {
+    const now = Date.now();
+
+    return WORD_ENTRIES.filter((word) => {
+      const progress = getProgress(progressByWordId, word.id);
+
+      return progress.status !== "new" && Date.parse(progress.dueAt) <= now;
+    }).length;
+  }, [progressByWordId]);
+
+  const clearedPercent =
+    WORD_ENTRIES.length === 0
+      ? 0
+      : Math.round((masteredCount / WORD_ENTRIES.length) * 100);
 
   const correctAttempts = attempts.filter((attempt) => attempt.correct).length;
   const currentWordMarkedWrong = currentWord
@@ -200,6 +219,38 @@ export function VocabularyApp() {
       }
     },
     [batchSize, filteredWords, progressByWordId],
+  );
+
+  const handleEnterLevel = React.useCallback(
+    (topicId: string) => {
+      const topicWords = WORD_ENTRIES.filter(
+        (word) => word.topicId === topicId,
+      );
+      const selectedWords = selectSessionWords(
+        topicWords,
+        progressByWordId,
+        batchSize,
+      );
+
+      setSelectedTopicId(topicId);
+      setSessionWords(selectedWords);
+      setCurrentIndex(0);
+      setRevealed(false);
+      setSelectedOption("");
+      setTypedAnswer("");
+      setAttempts([]);
+
+      const topic = TOPICS.find((item) => item.id === topicId);
+
+      if (selectedWords.length === 0) {
+        toast.error("这一关暂时没有可练习的单词");
+      } else {
+        toast.success(
+          `进入「${topic?.orderLabel ?? "本关"}」· ${selectedWords.length} 个词`,
+        );
+      }
+    },
+    [batchSize, progressByWordId],
   );
 
   const handleRecordAnswer = React.useCallback(
@@ -428,7 +479,7 @@ export function VocabularyApp() {
             <div className="grid grid-cols-3 gap-1.5 text-center sm:min-w-72 sm:gap-2">
               <MetricCard label="已掌握" value={masteredCount} />
               <MetricCard label="待复习" value={dueCount} />
-              <MetricCard label="已答题" value={totalAnswered} />
+              <MetricCard label="正确率" value={`${accuracy}%`} />
             </div>
           </div>
         </header>
@@ -463,22 +514,41 @@ export function VocabularyApp() {
             typedAnswer={typedAnswer}
           />
 
-          <div className="w-full">
-            <HiddenLearningTools
-              batchSize={batchSize}
-              filteredWords={filteredWords}
-              handleResetProgress={handleResetProgress}
-              handleStartSession={() => handleStartSession()}
-              initialized={initialized}
-              progressByWordId={progressByWordId}
-              selectedTopicId={selectedTopicId}
-              setBatchSize={setBatchSize}
-              setSelectedTopicId={setSelectedTopicId}
-              setStudyMode={setStudyMode}
-              studyMode={studyMode}
-              topicSummaries={topicSummaries}
-            />
-          </div>
+          <details className="rounded-[2rem] border-4 border-emerald-900/10 bg-white/70 p-4 shadow-[0_12px_0_rgba(20,83,45,0.08)] backdrop-blur sm:p-5">
+            <summary className="flex cursor-pointer items-center justify-between gap-3 text-lg font-black marker:text-emerald-700">
+              <span>
+                通关之路
+                <span className="ml-2 text-sm font-bold text-emerald-700">
+                  闯关地图 · 学习设置
+                </span>
+              </span>
+              <span className="shrink-0 rounded-full bg-emerald-600 px-3 py-1 text-sm font-black text-white">
+                通关 {clearedPercent}%
+              </span>
+            </summary>
+
+            <div className="mt-4 grid gap-4">
+              <ClearanceMap
+                dueCount={dueCount}
+                masteredCount={masteredCount}
+                onEnterLevel={handleEnterLevel}
+                statusCounts={statusCounts}
+                topicSummaries={topicSummaries}
+                totalWords={WORD_ENTRIES.length}
+              />
+              <LearningSettings
+                batchSize={batchSize}
+                handleResetProgress={handleResetProgress}
+                handleStartSession={() => handleStartSession()}
+                initialized={initialized}
+                selectedTopicId={selectedTopicId}
+                setBatchSize={setBatchSize}
+                setSelectedTopicId={setSelectedTopicId}
+                setStudyMode={setStudyMode}
+                studyMode={studyMode}
+              />
+            </div>
+          </details>
 
           <footer className="relative py-1 text-center sm:py-2">
             <p className="text-[11px] font-bold text-emerald-700/60 sm:text-xs sm:text-emerald-700/65">

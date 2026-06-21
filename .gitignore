@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI-assistant local config — never commit or deploy (see ~/.claude/CLAUDE.md)
+.claude/
+.cursor/
+.cursorrules
+.windsurf/
+.aider*
