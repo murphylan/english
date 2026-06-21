@@ -128,5 +128,13 @@ export const TOPICS = [
     "titleEn": "Performance",
     "rangeStart": 931,
     "rangeEnd": 1000
+  },
+  {
+    "id": "claude",
+    "orderLabel": "十七、Claude 状态词",
+    "titleZh": "Claude",
+    "titleEn": "Status Words",
+    "rangeStart": 1001,
+    "rangeEnd": 1043
   }
 ] satisfies Topic[];

@@ -15,6 +15,7 @@ import { AI_MACHINE_LEARNING_WORD_ENTRIES } from "./ai-machine-learning";
 import { UI_UX_DESIGN_WORD_ENTRIES } from "./ui-ux-design";
 import { COMMUNICATION_WORKPLACE_WORD_ENTRIES } from "./communication-workplace";
 import { PERFORMANCE_WORD_ENTRIES } from "./performance";
+import { CLAUDE_WORD_ENTRIES } from "./claude";
 
 export { TOPICS } from "./topics";
 export { FUNDAMENTALS_WORD_ENTRIES } from "./fundamentals";
@@ -33,6 +34,7 @@ export { AI_MACHINE_LEARNING_WORD_ENTRIES } from "./ai-machine-learning";
 export { UI_UX_DESIGN_WORD_ENTRIES } from "./ui-ux-design";
 export { COMMUNICATION_WORKPLACE_WORD_ENTRIES } from "./communication-workplace";
 export { PERFORMANCE_WORD_ENTRIES } from "./performance";
+export { CLAUDE_WORD_ENTRIES } from "./claude";
 
 export const WORD_ENTRIES: WordEntry[] = [
   ...FUNDAMENTALS_WORD_ENTRIES,
@@ -51,4 +53,5 @@ export const WORD_ENTRIES: WordEntry[] = [
   ...UI_UX_DESIGN_WORD_ENTRIES,
   ...COMMUNICATION_WORKPLACE_WORD_ENTRIES,
   ...PERFORMANCE_WORD_ENTRIES,
+  ...CLAUDE_WORD_ENTRIES,
 ];
