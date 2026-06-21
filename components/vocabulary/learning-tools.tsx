@@ -26,7 +26,7 @@ export function LearningSettings({
 }) {
   return (
     <>
-      <div className="grid gap-3 rounded-[1.5rem] bg-emerald-50/70 p-3 lg:grid-cols-[minmax(0,1fr)_220px_220px]">
+      <div className="grid gap-3 rounded-[1.5rem] bg-emerald-50/70 p-3 [&>*]:min-w-0 lg:grid-cols-[minmax(0,1fr)_220px_220px]">
         <label className="block text-sm font-black text-emerald-900">
           主题
           <select

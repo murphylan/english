@@ -527,7 +527,7 @@ export function VocabularyApp() {
               </span>
             </summary>
 
-            <div className="mt-4 grid gap-4">
+            <div className="mt-4 grid gap-4 [&>*]:min-w-0">
               <ClearanceMap
                 dueCount={dueCount}
                 masteredCount={masteredCount}

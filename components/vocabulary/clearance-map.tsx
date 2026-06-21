@@ -112,7 +112,7 @@ export function ClearanceMap({
         <h3 className="text-sm font-black text-emerald-900">
           闯关地图：{TOPICS.length} 关
         </h3>
-        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {TOPICS.map((topic, index) => {
             const summary = topicSummaries.find(
               (item) => item.topicId === topic.id,
