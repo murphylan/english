@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 
+// `output: export` 要求 metadata 路由在构建期静态生成
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "IT英语记忆训练器",
