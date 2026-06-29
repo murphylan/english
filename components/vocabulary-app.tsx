@@ -554,6 +554,7 @@ export function VocabularyApp() {
                 dueCount={dueCount}
                 masteredCount={masteredCount}
                 onEnterLevel={handleEnterLevel}
+                selectedTopicId={selectedTopicId}
                 statusCounts={statusCounts}
                 topicSummaries={topicSummaries}
                 totalWords={WORD_ENTRIES.length}

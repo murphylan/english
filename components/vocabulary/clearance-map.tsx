@@ -43,6 +43,7 @@ export function ClearanceMap({
   dueCount,
   masteredCount,
   onEnterLevel,
+  selectedTopicId,
   statusCounts,
   topicSummaries,
   totalWords,
@@ -50,6 +51,7 @@ export function ClearanceMap({
   dueCount: number;
   masteredCount: number;
   onEnterLevel: (topicId: string) => void;
+  selectedTopicId: string;
   statusCounts: StatusCounts;
   topicSummaries: TopicProgressSummary[];
   totalWords: number;
@@ -57,11 +59,16 @@ export function ClearanceMap({
   const remaining = Math.max(0, totalWords - masteredCount);
 
   // 当前关卡 = 第一个尚未完全掌握的主题。
-  const currentTopicId = TOPICS.find((topic) => {
+  const fallbackTopicId = TOPICS.find((topic) => {
     const summary = topicSummaries.find((item) => item.topicId === topic.id);
 
     return !summary || summary.mastered < summary.total;
   })?.id;
+
+  // 高亮跟随用户切换的章节；未指定具体章节（"all"）时回退到自动推断的当前关卡。
+  // selectedTopicId 已持久化到本地，因此高亮在刷新后依旧固化。
+  const activeTopicId =
+    selectedTopicId !== "all" ? selectedTopicId : fallbackTopicId;
 
   return (
     <>
@@ -122,7 +129,7 @@ export function ClearanceMap({
             const percent =
               total === 0 ? 0 : Math.round((mastered / total) * 100);
             const cleared = total > 0 && mastered >= total;
-            const isCurrent = topic.id === currentTopicId;
+            const isCurrent = topic.id === activeTopicId;
 
             return (
               <button
