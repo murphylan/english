@@ -105,6 +105,26 @@ export function updateProgressAfterAnswer(
   };
 }
 
+export function markWordMastered(current: WordProgress): WordProgress {
+  const now = new Date();
+  const correctCount = current.correctCount + 1;
+  const streak = current.streak + 1;
+  const ease = Math.min(3.2, current.ease + 0.08);
+  // 一键掌握：直接置为 mastered，但仍按间隔复习安排下一次到期时间。
+  const intervalDays = Math.max(current.intervalDays, 4);
+
+  return {
+    ...current,
+    status: "mastered",
+    correctCount,
+    streak,
+    ease,
+    intervalDays,
+    dueAt: new Date(now.getTime() + intervalDays * DAY_IN_MS).toISOString(),
+    lastReviewedAt: now.toISOString(),
+  };
+}
+
 export function selectSessionWords(
   words: WordEntry[],
   progressByWordId: Record<string, WordProgress>,

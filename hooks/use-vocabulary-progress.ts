@@ -5,6 +5,7 @@ import * as React from "react";
 import type { StudyMode, WordProgress } from "@/types/vocabulary-types";
 import {
   getProgress,
+  markWordMastered,
   updateProgressAfterAnswer,
 } from "@/lib/learning/progress";
 import {
@@ -71,6 +72,20 @@ export function useVocabularyProgress() {
     [],
   );
 
+  const markMastered = React.useCallback((wordId: string) => {
+    setProgressByWordId((current) => {
+      const progress = getProgress(current, wordId);
+      const nextProgressByWordId = {
+        ...current,
+        [wordId]: markWordMastered(progress),
+      };
+
+      setPersistentItem(PROGRESS_STORAGE_KEY, nextProgressByWordId);
+
+      return nextProgressByWordId;
+    });
+  }, []);
+
   const resetProgress = React.useCallback(() => {
     setProgressByWordId({});
     removePersistentItem(PROGRESS_STORAGE_KEY);
@@ -80,6 +95,7 @@ export function useVocabularyProgress() {
     initialized,
     progressByWordId,
     recordAnswer,
+    markMastered,
     resetProgress,
   };
 }

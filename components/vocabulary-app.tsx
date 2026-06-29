@@ -71,8 +71,13 @@ function restoreSessionWords(wordIds: string[]): WordEntry[] {
 
 export function VocabularyApp() {
   // 1. Hooks
-  const { initialized, progressByWordId, recordAnswer, resetProgress } =
-    useVocabularyProgress();
+  const {
+    initialized,
+    progressByWordId,
+    recordAnswer,
+    markMastered,
+    resetProgress,
+  } = useVocabularyProgress();
 
   // 2. State
   const [selectedTopicId, setSelectedTopicId] = React.useState("all");
@@ -271,6 +276,22 @@ export function VocabularyApp() {
     },
     [currentWord, recordAnswer, studyMode],
   );
+
+  const handleMarkMastered = React.useCallback(() => {
+    if (!currentWord) {
+      return;
+    }
+
+    markMastered(currentWord.id);
+    setAttempts((current) => [
+      ...current,
+      { wordId: currentWord.id, correct: true },
+    ]);
+    setCurrentIndex((index) => index + 1);
+    setRevealed(false);
+    setSelectedOption("");
+    setTypedAnswer("");
+  }, [currentWord, markMastered]);
 
   const handleMarkUnfamiliar = React.useCallback(() => {
     if (!currentWord) {
@@ -496,6 +517,7 @@ export function VocabularyApp() {
             currentWordMarkedWrong={currentWordMarkedWrong}
             exampleSentences={exampleSentences}
             handleChoiceAnswer={handleChoiceAnswer}
+            handleMarkMastered={handleMarkMastered}
             handleMarkUnfamiliar={handleMarkUnfamiliar}
             handleRecordAnswer={handleRecordAnswer}
             handleSpellingSubmit={handleSpellingSubmit}

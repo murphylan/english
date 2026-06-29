@@ -87,6 +87,7 @@ export function StudyPanel({
   currentWordMarkedWrong,
   exampleSentences,
   handleChoiceAnswer,
+  handleMarkMastered,
   handleMarkUnfamiliar,
   handleRecordAnswer,
   handleSpellingSubmit,
@@ -114,6 +115,7 @@ export function StudyPanel({
   currentWordMarkedWrong: boolean;
   exampleSentences: string[];
   handleChoiceAnswer: (option: string) => void;
+  handleMarkMastered: () => void;
   handleMarkUnfamiliar: () => void;
   handleRecordAnswer: (correct: boolean) => void;
   handleSpellingSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -230,6 +232,7 @@ export function StudyPanel({
           currentWordMarkedWrong={currentWordMarkedWrong}
           exampleSentences={exampleSentences}
           handleChoiceAnswer={handleChoiceAnswer}
+          handleMarkMastered={handleMarkMastered}
           handleMarkUnfamiliar={handleMarkUnfamiliar}
           handleRecordAnswer={handleRecordAnswer}
           handleSpellingSubmit={handleSpellingSubmit}
@@ -251,6 +254,7 @@ function WordFocusCard({
   currentWordMarkedWrong,
   exampleSentences,
   handleChoiceAnswer,
+  handleMarkMastered,
   handleMarkUnfamiliar,
   handleRecordAnswer,
   handleSpellingSubmit,
@@ -266,6 +270,7 @@ function WordFocusCard({
   currentWordMarkedWrong: boolean;
   exampleSentences: string[];
   handleChoiceAnswer: (option: string) => void;
+  handleMarkMastered: () => void;
   handleMarkUnfamiliar: () => void;
   handleRecordAnswer: (correct: boolean) => void;
   handleSpellingSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -384,6 +389,7 @@ function WordFocusCard({
                       currentWord={currentWord}
                       currentWordMarkedWrong={currentWordMarkedWrong}
                       handleChoiceAnswer={handleChoiceAnswer}
+                      handleMarkMastered={handleMarkMastered}
                       handleMarkUnfamiliar={handleMarkUnfamiliar}
                       handleRecordAnswer={handleRecordAnswer}
                       handleSpellingSubmit={handleSpellingSubmit}
@@ -415,6 +421,7 @@ function WordFocusCard({
                   currentWord={currentWord}
                   currentWordMarkedWrong={currentWordMarkedWrong}
                   handleChoiceAnswer={handleChoiceAnswer}
+                  handleMarkMastered={handleMarkMastered}
                   handleMarkUnfamiliar={handleMarkUnfamiliar}
                   handleRecordAnswer={handleRecordAnswer}
                   handleSpellingSubmit={handleSpellingSubmit}
@@ -537,6 +544,7 @@ function PracticeContent({
   currentWord,
   currentWordMarkedWrong,
   handleChoiceAnswer,
+  handleMarkMastered,
   handleMarkUnfamiliar,
   handleRecordAnswer,
   handleSpellingSubmit,
@@ -551,6 +559,7 @@ function PracticeContent({
   currentWord: WordEntry;
   currentWordMarkedWrong: boolean;
   handleChoiceAnswer: (option: string) => void;
+  handleMarkMastered: () => void;
   handleMarkUnfamiliar: () => void;
   handleRecordAnswer: (correct: boolean) => void;
   handleSpellingSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -591,7 +600,7 @@ function PracticeContent({
               </button>
               <button
                 type="button"
-                onClick={() => handleRecordAnswer(true)}
+                onClick={handleMarkMastered}
                 className="rounded-2xl bg-emerald-600 px-2.5 py-1 text-xs font-black text-white shadow-[0_4px_0_rgba(20,83,45,0.35)] transition hover:-translate-y-0.5 hover:bg-emerald-500 sm:px-4 sm:py-3 sm:text-sm"
               >
                 记住了

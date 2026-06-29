@@ -16,6 +16,12 @@ import { UI_UX_DESIGN_WORD_ENTRIES } from "./ui-ux-design";
 import { COMMUNICATION_WORKPLACE_WORD_ENTRIES } from "./communication-workplace";
 import { PERFORMANCE_WORD_ENTRIES } from "./performance";
 import { CLAUDE_WORD_ENTRIES } from "./claude";
+import { CLAUDE_COGNITION_WORD_ENTRIES } from "./claude-cognition";
+import { CLAUDE_COOKING_WORD_ENTRIES } from "./claude-cooking";
+import { CLAUDE_MOTION_WORD_ENTRIES } from "./claude-motion";
+import { CLAUDE_CRAFT_WORD_ENTRIES } from "./claude-craft";
+import { CLAUDE_SLANG_WORD_ENTRIES } from "./claude-slang";
+import { CLAUDE_EASTER_EGG_WORD_ENTRIES } from "./claude-easter-eggs";
 
 export { TOPICS } from "./topics";
 export { FUNDAMENTALS_WORD_ENTRIES } from "./fundamentals";
@@ -35,6 +41,12 @@ export { UI_UX_DESIGN_WORD_ENTRIES } from "./ui-ux-design";
 export { COMMUNICATION_WORKPLACE_WORD_ENTRIES } from "./communication-workplace";
 export { PERFORMANCE_WORD_ENTRIES } from "./performance";
 export { CLAUDE_WORD_ENTRIES } from "./claude";
+export { CLAUDE_COGNITION_WORD_ENTRIES } from "./claude-cognition";
+export { CLAUDE_COOKING_WORD_ENTRIES } from "./claude-cooking";
+export { CLAUDE_MOTION_WORD_ENTRIES } from "./claude-motion";
+export { CLAUDE_CRAFT_WORD_ENTRIES } from "./claude-craft";
+export { CLAUDE_SLANG_WORD_ENTRIES } from "./claude-slang";
+export { CLAUDE_EASTER_EGG_WORD_ENTRIES } from "./claude-easter-eggs";
 
 export const WORD_ENTRIES: WordEntry[] = [
   ...FUNDAMENTALS_WORD_ENTRIES,
@@ -54,4 +66,10 @@ export const WORD_ENTRIES: WordEntry[] = [
   ...COMMUNICATION_WORKPLACE_WORD_ENTRIES,
   ...PERFORMANCE_WORD_ENTRIES,
   ...CLAUDE_WORD_ENTRIES,
+  ...CLAUDE_COGNITION_WORD_ENTRIES,
+  ...CLAUDE_COOKING_WORD_ENTRIES,
+  ...CLAUDE_MOTION_WORD_ENTRIES,
+  ...CLAUDE_CRAFT_WORD_ENTRIES,
+  ...CLAUDE_SLANG_WORD_ENTRIES,
+  ...CLAUDE_EASTER_EGG_WORD_ENTRIES,
 ];

@@ -5,18 +5,6 @@ export const CLAUDE_WORD_ENTRIES = [
     "id": "w1001",
     "no": 1001,
     "topicId": "claude",
-    "word": "mulling",
-    "phonetic": "/ˈmʌlɪŋ/",
-    "englishDefinition": "Thinking something over carefully and at length",
-    "chineseDefinition": "深思熟虑、反复琢磨",
-    "exampleSentences": [
-      "When Claude hits a logically tricky bug or weighs several refactor options, the terminal shows \"Mulling...\"."
-    ]
-  },
-  {
-    "id": "w1002",
-    "no": 1002,
-    "topicId": "claude",
     "word": "puzzling",
     "phonetic": "/ˈpʌzlɪŋ/",
     "englishDefinition": "Struggling to make sense of something confusing",
@@ -26,44 +14,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1003",
-    "no": 1003,
-    "topicId": "claude",
-    "word": "contemplating",
-    "phonetic": "/ˈkɒntəmpleɪtɪŋ/",
-    "englishDefinition": "Considering something thoughtfully before acting",
-    "chineseDefinition": "沉思、盘算、仔细考虑",
-    "exampleSentences": [
-      "Claude shows \"Contemplating\" while planning the next big change to the project."
-    ]
-  },
-  {
-    "id": "w1004",
-    "no": 1004,
-    "topicId": "claude",
-    "word": "synthesizing",
-    "phonetic": "/ˈsɪnθəsaɪzɪŋ/",
-    "englishDefinition": "Combining separate pieces into a coherent whole",
-    "chineseDefinition": "综合、合成、统筹",
-    "exampleSentences": [
-      "After reading several files, Claude is \"Synthesizing\" the fragments into one complete solution."
-    ]
-  },
-  {
-    "id": "w1005",
-    "no": 1005,
-    "topicId": "claude",
-    "word": "generating",
-    "phonetic": "/ˈdʒenəreɪtɪŋ/",
-    "englishDefinition": "Producing or creating something new",
-    "chineseDefinition": "生成、产生",
-    "exampleSentences": [
-      "\"Generating code...\" means Claude is writing new code, docs, or test cases for you."
-    ]
-  },
-  {
-    "id": "w1006",
-    "no": 1006,
+    "id": "w1002",
+    "no": 1002,
     "topicId": "claude",
     "word": "compacting",
     "phonetic": "/kəmˈpæktɪŋ/",
@@ -74,8 +26,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1007",
-    "no": 1007,
+    "id": "w1003",
+    "no": 1003,
     "topicId": "claude",
     "word": "refining",
     "phonetic": "/rɪˈfaɪnɪŋ/",
@@ -86,8 +38,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1008",
-    "no": 1008,
+    "id": "w1004",
+    "no": 1004,
     "topicId": "claude",
     "word": "drafting",
     "phonetic": "/ˈdræftɪŋ/",
@@ -98,8 +50,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1009",
-    "no": 1009,
+    "id": "w1005",
+    "no": 1005,
     "topicId": "claude",
     "word": "scanning",
     "phonetic": "/ˈskænɪŋ/",
@@ -110,8 +62,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1010",
-    "no": 1010,
+    "id": "w1006",
+    "no": 1006,
     "topicId": "claude",
     "word": "sifting",
     "phonetic": "/ˈsɪftɪŋ/",
@@ -122,8 +74,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1011",
-    "no": 1011,
+    "id": "w1007",
+    "no": 1007,
     "topicId": "claude",
     "word": "traversing",
     "phonetic": "/trəˈvɜːrsɪŋ/",
@@ -134,8 +86,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1012",
-    "no": 1012,
+    "id": "w1008",
+    "no": 1008,
     "topicId": "claude",
     "word": "peeking",
     "phonetic": "/ˈpiːkɪŋ/",
@@ -146,8 +98,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1013",
-    "no": 1013,
+    "id": "w1009",
+    "no": 1009,
     "topicId": "claude",
     "word": "herding",
     "phonetic": "/ˈhɜːrdɪŋ/",
@@ -158,20 +110,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1014",
-    "no": 1014,
-    "topicId": "claude",
-    "word": "inferring",
-    "phonetic": "/ɪnˈfɜːrɪŋ/",
-    "englishDefinition": "Reaching a conclusion from evidence and reasoning",
-    "chineseDefinition": "推断、推理",
-    "exampleSentences": [
-      "Claude shows \"Inferring\" while deducing intent from incomplete clues in the code."
-    ]
-  },
-  {
-    "id": "w1015",
-    "no": 1015,
+    "id": "w1010",
+    "no": 1010,
     "topicId": "claude",
     "word": "pontificating",
     "phonetic": "/pɒnˈtɪfɪkeɪtɪŋ/",
@@ -182,20 +122,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1016",
-    "no": 1016,
-    "topicId": "claude",
-    "word": "simmering",
-    "phonetic": "/ˈsɪmərɪŋ/",
-    "englishDefinition": "Developing slowly and quietly beneath the surface",
-    "chineseDefinition": "慢炖、酝酿",
-    "exampleSentences": [
-      "\"Simmering\" suggests Claude is letting an idea slowly come together in the background."
-    ]
-  },
-  {
-    "id": "w1017",
-    "no": 1017,
+    "id": "w1011",
+    "no": 1011,
     "topicId": "claude",
     "word": "determining",
     "phonetic": "/dɪˈtɜːrmɪnɪŋ/",
@@ -206,20 +134,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1018",
-    "no": 1018,
-    "topicId": "claude",
-    "word": "booping",
-    "phonetic": "/ˈbuːpɪŋ/",
-    "englishDefinition": "Playfully tapping or poking at something",
-    "chineseDefinition": "轻点、戳一下",
-    "exampleSentences": [
-      "\"Booping\" is one of Claude's whimsical status words shown during light, quick actions."
-    ]
-  },
-  {
-    "id": "w1019",
-    "no": 1019,
+    "id": "w1012",
+    "no": 1012,
     "topicId": "claude",
     "word": "sussing",
     "phonetic": "/ˈsʌsɪŋ/",
@@ -230,8 +146,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1020",
-    "no": 1020,
+    "id": "w1013",
+    "no": 1013,
     "topicId": "claude",
     "word": "shimmying",
     "phonetic": "/ˈʃɪmiɪŋ/",
@@ -242,8 +158,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1021",
-    "no": 1021,
+    "id": "w1014",
+    "no": 1014,
     "topicId": "claude",
     "word": "frolicking",
     "phonetic": "/ˈfrɒlɪkɪŋ/",
@@ -254,8 +170,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1022",
-    "no": 1022,
+    "id": "w1015",
+    "no": 1015,
     "topicId": "claude",
     "word": "enchanting",
     "phonetic": "/ɪnˈtʃæntɪŋ/",
@@ -266,44 +182,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1023",
-    "no": 1023,
-    "topicId": "claude",
-    "word": "cogitating",
-    "phonetic": "/ˈkɒdʒɪteɪtɪŋ/",
-    "englishDefinition": "Thinking deeply and methodically",
-    "chineseDefinition": "思索、思量",
-    "exampleSentences": [
-      "Claude shows \"Cogitating\" while reasoning carefully through a hard problem."
-    ]
-  },
-  {
-    "id": "w1024",
-    "no": 1024,
-    "topicId": "claude",
-    "word": "schlepping",
-    "phonetic": "/ˈʃlepɪŋ/",
-    "englishDefinition": "Hauling or dragging something along tediously",
-    "chineseDefinition": "费力搬运、吃力地拖运",
-    "exampleSentences": [
-      "\"Schlepping\" is a humorous Claude status word for the grind of moving a lot of stuff around."
-    ]
-  },
-  {
-    "id": "w1025",
-    "no": 1025,
-    "topicId": "claude",
-    "word": "pondering",
-    "phonetic": "/ˈpɒndərɪŋ/",
-    "englishDefinition": "Considering something carefully and quietly",
-    "chineseDefinition": "沉思、考量",
-    "exampleSentences": [
-      "Claude shows \"Pondering\" while turning a question over in its mind."
-    ]
-  },
-  {
-    "id": "w1026",
-    "no": 1026,
+    "id": "w1016",
+    "no": 1016,
     "topicId": "claude",
     "word": "wobbling",
     "phonetic": "/ˈwɒblɪŋ/",
@@ -314,32 +194,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1027",
-    "no": 1027,
-    "topicId": "claude",
-    "word": "germinating",
-    "phonetic": "/ˈdʒɜːrmɪneɪtɪŋ/",
-    "englishDefinition": "Beginning to sprout or develop",
-    "chineseDefinition": "萌芽、孕育",
-    "exampleSentences": [
-      "\"Germinating\" suggests an idea is just starting to take root as Claude works."
-    ]
-  },
-  {
-    "id": "w1028",
-    "no": 1028,
-    "topicId": "claude",
-    "word": "ruminating",
-    "phonetic": "/ˈruːmɪneɪtɪŋ/",
-    "englishDefinition": "Mulling something over again and again",
-    "chineseDefinition": "反刍、反复思考",
-    "exampleSentences": [
-      "Claude shows \"Ruminating\" while chewing repeatedly on a difficult question."
-    ]
-  },
-  {
-    "id": "w1029",
-    "no": 1029,
+    "id": "w1017",
+    "no": 1017,
     "topicId": "claude",
     "word": "mustering",
     "phonetic": "/ˈmʌstərɪŋ/",
@@ -350,20 +206,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1030",
-    "no": 1030,
-    "topicId": "claude",
-    "word": "whirring",
-    "phonetic": "/ˈwɜːrɪŋ/",
-    "englishDefinition": "Making a steady, low humming sound while working",
-    "chineseDefinition": "嗡嗡运转",
-    "exampleSentences": [
-      "\"Whirring\" is a Claude status word evoking gears busily turning."
-    ]
-  },
-  {
-    "id": "w1031",
-    "no": 1031,
+    "id": "w1018",
+    "no": 1018,
     "topicId": "claude",
     "word": "stewing",
     "phonetic": "/ˈstuːɪŋ/",
@@ -374,104 +218,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1032",
-    "no": 1032,
-    "topicId": "claude",
-    "word": "forging",
-    "phonetic": "/ˈfɔːrdʒɪŋ/",
-    "englishDefinition": "Shaping something with effort and force",
-    "chineseDefinition": "锻造、打造",
-    "exampleSentences": [
-      "\"Forging\" appears as Claude hammers a solution into shape."
-    ]
-  },
-  {
-    "id": "w1033",
-    "no": 1033,
-    "topicId": "claude",
-    "word": "discombobulating",
-    "phonetic": "/ˌdɪskəmˈbɒbjuleɪtɪŋ/",
-    "englishDefinition": "Confusing or disorienting someone or something",
-    "chineseDefinition": "使困惑、搞晕",
-    "exampleSentences": [
-      "\"Discombobulating\" is a playful Claude status word for moments of cheerful chaos."
-    ]
-  },
-  {
-    "id": "w1034",
-    "no": 1034,
-    "topicId": "claude",
-    "word": "hatching",
-    "phonetic": "/ˈhætʃɪŋ/",
-    "englishDefinition": "Devising or bringing a plan into being",
-    "chineseDefinition": "孵化、谋划",
-    "exampleSentences": [
-      "Claude shows \"Hatching\" while cooking up a plan for the next step."
-    ]
-  },
-  {
-    "id": "w1035",
-    "no": 1035,
-    "topicId": "claude",
-    "word": "vibing",
-    "phonetic": "/ˈvaɪbɪŋ/",
-    "englishDefinition": "Going with the flow in an easy, intuitive way",
-    "chineseDefinition": "找感觉、随性而为",
-    "exampleSentences": [
-      "\"Vibing\" is one of Claude's relaxed, playful status words."
-    ]
-  },
-  {
-    "id": "w1036",
-    "no": 1036,
-    "topicId": "claude",
-    "word": "clauding",
-    "phonetic": "/ˈklɔːdɪŋ/",
-    "englishDefinition": "Doing the distinctly Claude thing (a playful coinage)",
-    "chineseDefinition": "像 Claude 一样思考、施展本领",
-    "exampleSentences": [
-      "\"Clauding\" is a self-referential, tongue-in-cheek status word Claude shows now and then."
-    ]
-  },
-  {
-    "id": "w1037",
-    "no": 1037,
-    "topicId": "claude",
-    "word": "cerebrating",
-    "phonetic": "/ˈserɪbreɪtɪŋ/",
-    "englishDefinition": "Using the brain; thinking hard",
-    "chineseDefinition": "动脑、思考",
-    "exampleSentences": [
-      "Claude shows \"Cerebrating\" while putting serious brainpower into the problem."
-    ]
-  },
-  {
-    "id": "w1038",
-    "no": 1038,
-    "topicId": "claude",
-    "word": "coalescing",
-    "phonetic": "/ˌkoʊəˈlesɪŋ/",
-    "englishDefinition": "Coming together to form a single whole",
-    "chineseDefinition": "合并、凝聚",
-    "exampleSentences": [
-      "\"Coalescing\" appears as separate ideas merge into one cohesive answer."
-    ]
-  },
-  {
-    "id": "w1039",
-    "no": 1039,
-    "topicId": "claude",
-    "word": "baking",
-    "phonetic": "/ˈbeɪkɪŋ/",
-    "englishDefinition": "Letting something finish forming, as if in an oven",
-    "chineseDefinition": "烘焙、酝酿成型",
-    "exampleSentences": [
-      "\"Baking\" is a Claude status word for letting a result fully come together."
-    ]
-  },
-  {
-    "id": "w1040",
-    "no": 1040,
+    "id": "w1019",
+    "no": 1019,
     "topicId": "claude",
     "word": "checkpoint",
     "phonetic": "/ˈtʃekpɔɪnt/",
@@ -482,8 +230,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1041",
-    "no": 1041,
+    "id": "w1020",
+    "no": 1020,
     "topicId": "claude",
     "word": "compaction",
     "phonetic": "/kəmˈpækʃn/",
@@ -494,8 +242,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1042",
-    "no": 1042,
+    "id": "w1021",
+    "no": 1021,
     "topicId": "claude",
     "word": "telemetry",
     "phonetic": "/təˈlemətri/",
@@ -506,8 +254,8 @@ export const CLAUDE_WORD_ENTRIES = [
     ]
   },
   {
-    "id": "w1043",
-    "no": 1043,
+    "id": "w1022",
+    "no": 1022,
     "topicId": "claude",
     "word": "throttle",
     "phonetic": "/ˈθrɒtl/",
@@ -516,5 +264,5 @@ export const CLAUDE_WORD_ENTRIES = [
     "exampleSentences": [
       "When API calls come too frequently, they get \"throttled\" by the rate limit."
     ]
-  }
+  },
 ] satisfies WordEntry[];

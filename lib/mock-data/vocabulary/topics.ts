@@ -135,6 +135,54 @@ export const TOPICS = [
     "titleZh": "Claude 状态词",
     "titleEn": "Status Words",
     "rangeStart": 1001,
-    "rangeEnd": 1043
+    "rangeEnd": 1022
+  },
+  {
+    "id": "claude-cognition",
+    "orderLabel": "十八、Spinner Verbs · 认知思考",
+    "titleZh": "认知思考类",
+    "titleEn": "Spinner Verbs · Cognition",
+    "rangeStart": 1101,
+    "rangeEnd": 1117
+  },
+  {
+    "id": "claude-cooking",
+    "orderLabel": "十九、Spinner Verbs · 烹饪比喻",
+    "titleZh": "烹饪与物理过程比喻类",
+    "titleEn": "Spinner Verbs · Cooking & Process",
+    "rangeStart": 1118,
+    "rangeEnd": 1135
+  },
+  {
+    "id": "claude-motion",
+    "orderLabel": "二十、Spinner Verbs · 运动流动",
+    "titleZh": "运动与流动类",
+    "titleEn": "Spinner Verbs · Motion & Flow",
+    "rangeStart": 1136,
+    "rangeEnd": 1149
+  },
+  {
+    "id": "claude-craft",
+    "orderLabel": "二十一、Spinner Verbs · 手工创造",
+    "titleZh": "手工制作与创造类",
+    "titleEn": "Spinner Verbs · Craft & Creation",
+    "rangeStart": 1150,
+    "rangeEnd": 1164
+  },
+  {
+    "id": "claude-slang",
+    "orderLabel": "二十二、Spinner Verbs · 幽默俚语",
+    "titleZh": "幽默俚语类",
+    "titleEn": "Spinner Verbs · Playful Slang",
+    "rangeStart": 1165,
+    "rangeEnd": 1183
+  },
+  {
+    "id": "claude-easter-eggs",
+    "orderLabel": "二十三、Spinner Verbs · 极客彩蛋",
+    "titleZh": "极客彩蛋类",
+    "titleEn": "Spinner Verbs · Geek Easter Eggs",
+    "rangeStart": 1184,
+    "rangeEnd": 1192
   }
 ] satisfies Topic[];
